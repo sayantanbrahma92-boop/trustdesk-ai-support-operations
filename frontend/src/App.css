@@ -1,0 +1,250 @@
+.app {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+
+.page-header,
+.card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 4px;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 1.15rem;
+}
+
+.subtitle,
+.message {
+  color: #637083;
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  color: #52637c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.service-status,
+.status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #e9f5ef;
+  color: #216342;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.inbox {
+  margin-bottom: 22px;
+}
+
+.inbox label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 650;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd3df;
+  border-radius: 8px;
+  background: white;
+  color: #192538;
+  font: inherit;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid #dce2eb;
+  border-radius: 12px;
+  background: white;
+  color: #192538;
+  box-shadow: 0 4px 16px rgb(27 42 65 / 5%);
+}
+
+.card h2 {
+  color: #192538;
+}
+
+.ticket-card,
+.action-card {
+  grid-column: 1 / -1;
+}
+
+dl {
+  margin: 18px 0 0;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.35fr) 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #edf0f4;
+}
+
+dt {
+  color: #637083;
+  font-size: 0.92rem;
+}
+
+dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.message-body {
+  white-space: pre-wrap;
+}
+
+.message {
+  margin: 10px 0 0;
+}
+
+.error {
+  color: #a12121;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.action-buttons button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #3157a4;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.action-buttons button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.result-block {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #edf0f4;
+}
+
+.result-block h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.result-block p {
+  margin: 6px 0;
+}
+
+.approval-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.approval-form label {
+  font-weight: 600;
+}
+
+.approval-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd3df;
+  border-radius: 8px;
+  color: #192538;
+  font: inherit;
+}
+
+.action-buttons .secondary-button {
+  background: #596579;
+}
+
+.evaluation-card {
+  margin-bottom: 22px;
+}
+
+.evaluation-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.metric {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+}
+
+.metric-label,
+.metric-detail {
+  color: #637083;
+  font-size: 0.88rem;
+}
+
+.metric strong {
+  color: #192538;
+  font-size: 1.35rem;
+}
+
+@media (max-width: 680px) {
+  .app {
+    width: min(100% - 28px, 540px);
+    padding-top: 24px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-card,
+  .action-card {
+    grid-column: auto;
+  }
+
+  .field {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .service-status {
+    display: none;
+  }
+}

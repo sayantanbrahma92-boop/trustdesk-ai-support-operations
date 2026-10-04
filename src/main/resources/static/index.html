@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TrustDesk Support Desk</title>
+    <style>
+        body { font: 16px system-ui, sans-serif; margin: 2rem auto; max-width: 900px; padding: 0 1rem; color: #172033; }
+        h1 { margin-bottom: .25rem; }
+        .muted { color: #5c667a; }
+        label { display: block; margin: 1.5rem 0 .4rem; font-weight: 600; }
+        select { font: inherit; max-width: 100%; padding: .65rem; width: 100%; }
+        section { border: 1px solid #d8deea; border-radius: 8px; margin-top: 1rem; padding: 1rem; }
+        h2 { font-size: 1.1rem; margin-top: 0; }
+        dt { font-weight: 600; margin-top: .7rem; }
+        dd { margin: .15rem 0 0; overflow-wrap: anywhere; }
+        #status { min-height: 1.5rem; }
+        .error { color: #a21b1b; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>TrustDesk Support Desk</h1>
+    <p class="muted">Select a ticket to review its customer and order context.</p>
+</header>
+
+<label for="ticket-select">Tickets</label>
+<select id="ticket-select" disabled>
+    <option>Loading tickets...</option>
+</select>
+<p id="status" role="status" aria-live="polite"></p>
+
+<main id="ticket-details" hidden>
+    <section>
+        <h2>Ticket</h2>
+        <dl id="ticket-info"></dl>
+    </section>
+    <section>
+        <h2>Customer</h2>
+        <dl id="customer-info"></dl>
+    </section>
+    <section>
+        <h2>Order</h2>
+        <dl id="order-info"></dl>
+    </section>
+</main>
+
+<script>
+    const ticketSelect = document.querySelector("#ticket-select");
+    const status = document.querySelector("#status");
+    const details = document.querySelector("#ticket-details");
+
+    function addField(list, label, value) {
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const description = document.createElement("dd");
+        description.textContent = value ?? "Not available";
+        list.append(term, description);
+    }
+
+    function showTicket(ticket) {
+        const ticketInfo = document.querySelector("#ticket-info");
+        const customerInfo = document.querySelector("#customer-info");
+        const orderInfo = document.querySelector("#order-info");
+
+        ticketInfo.replaceChildren();
+        customerInfo.replaceChildren();
+        orderInfo.replaceChildren();
+
+        addField(ticketInfo, "ID", ticket.ticketId);
+        addField(ticketInfo, "Subject", ticket.subject);
+        addField(ticketInfo, "Message", ticket.body);
+        addField(ticketInfo, "Created", ticket.createdAt);
+        addField(ticketInfo, "Status", ticket.status);
+
+        addField(customerInfo, "Name", ticket.customer?.name);
+        addField(customerInfo, "Email", ticket.customer?.email);
+        addField(customerInfo, "Tier", ticket.customer?.tier);
+        addField(customerInfo, "Verified", String(ticket.customer?.verified));
+
+        if (ticket.order) {
+            addField(orderInfo, "Order ID", ticket.order.orderId);
+            addField(orderInfo, "Status", ticket.order.status);
+            addField(orderInfo, "Placed", ticket.order.placedAt);
+            addField(orderInfo, "Return eligible until", ticket.order.eligibleReturnUntil);
+            addField(orderInfo, "Total", `${ticket.order.total} ${ticket.order.currency}`);
+            addField(
+                orderInfo,
+                "Items",
+                ticket.order.items.map(item => `${item.name} x${item.quantity}`).join(", ")
+            );
+        } else {
+            addField(orderInfo, "Order", "No linked order");
+        }
+
+        details.hidden = false;
+    }
+
+    async function loadTickets() {
+        try {
+            const response = await fetch("/api/tickets");
+            if (!response.ok) {
+                throw new Error(`Ticket request failed (${response.status})`);
+            }
+
+            const tickets = await response.json();
+            ticketSelect.replaceChildren();
+
+            for (const ticket of tickets) {
+                const option = document.createElement("option");
+                option.value = ticket.ticketId;
+                option.textContent = `${ticket.ticketId} — ${ticket.subject}`;
+                ticketSelect.append(option);
+            }
+
+            if (tickets.length === 0) {
+                ticketSelect.add(new Option("No tickets found", ""));
+                status.textContent = "There are no tickets to display.";
+                return;
+            }
+
+            ticketSelect.disabled = false;
+            ticketSelect.addEventListener("change", () => {
+                const selected = tickets.find(
+                    ticket => ticket.ticketId === ticketSelect.value
+                );
+                if (selected) showTicket(selected);
+            });
+            showTicket(tickets[0]);
+        } catch (error) {
+            status.textContent = error.message;
+            status.classList.add("error");
+            ticketSelect.replaceChildren(new Option("Could not load tickets", ""));
+        }
+    }
+
+    loadTickets();
+</script>
+</body>
+</html>
