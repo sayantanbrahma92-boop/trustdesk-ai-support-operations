@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from app.embeddings import LocalSemanticEmbedder
-from app.kb_loader import load_and_index_markdown_documents
-from app.retrieval import KnowledgeRetriever
+from app.knowledge.embeddings import LocalSemanticEmbedder
+from app.knowledge.kb_loader import load_and_index_markdown_documents
+from app.knowledge.retrieval import KnowledgeRetriever
 
 
 def test_local_semantic_search_retrieves_refund_policy(tmp_path):

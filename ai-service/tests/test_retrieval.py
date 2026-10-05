@@ -1,4 +1,4 @@
-from app.retrieval import KnowledgeDocument, KnowledgeRetriever
+from app.knowledge.retrieval import KnowledgeDocument, KnowledgeRetriever
 
 
 class KeywordTestEmbedder:
