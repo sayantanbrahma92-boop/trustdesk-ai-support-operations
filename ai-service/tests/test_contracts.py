@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from app.schemas import TriageRequest, TriageResponse
+from app.ai.schemas import TriageRequest, TriageResponse
 
 
 def test_accepts_minimal_triage_request():

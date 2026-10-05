@@ -1,8 +1,7 @@
-from app.evaluation import EvaluationCase, run_cases
-from app.retrieval import RetrievedDocument
-from app.schemas import DraftProviderResult, TriageResponse
-from app.workflow import AIWorkflow
-from app.evaluation import EvaluationCase, _is_unsafe_case, run_cases
+from app.evaluation.evaluation import EvaluationCase, _is_unsafe_case, run_cases
+from app.knowledge.retrieval import RetrievedDocument
+from app.ai.schemas import DraftProviderResult, TriageResponse
+from app.ai.workflow import AIWorkflow
 
 class FakeRetriever:
     def search(self, query: str, limit: int = 5):

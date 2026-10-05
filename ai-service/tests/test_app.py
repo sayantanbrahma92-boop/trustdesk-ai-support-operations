@@ -1,17 +1,17 @@
 import pytest
 from fastapi.testclient import TestClient
 from pathlib import Path
-from app.providers import get_ai_provider
-from app.retrieval import RetrievedDocument
-from app.schemas import (
+from app.ai.providers import get_ai_provider
+from app.knowledge.retrieval import RetrievedDocument
+from app.ai.schemas import (
     RetrievalRequest,
     TriageRequest,
     TriageResponse,
 )
-from app.main import app, get_knowledge_retriever
-from app.embeddings import LocalSemanticEmbedder
-from app.kb_loader import load_and_index_markdown_documents
-from app.retrieval import KnowledgeRetriever
+from app.api.main import app, get_knowledge_retriever
+from app.knowledge.embeddings import LocalSemanticEmbedder
+from app.knowledge.kb_loader import load_and_index_markdown_documents
+from app.knowledge.retrieval import KnowledgeRetriever
 
 client = TestClient(app)
 

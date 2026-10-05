@@ -2,11 +2,11 @@ from pathlib import Path
 
 import pytest
 
-from app.kb_loader import (
+from app.knowledge.kb_loader import (
     load_and_index_markdown_documents,
     load_markdown_documents,
 )
-from app.retrieval import KnowledgeRetriever
+from app.knowledge.retrieval import KnowledgeRetriever
 
 
 

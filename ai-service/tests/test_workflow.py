@@ -1,11 +1,11 @@
-from app.retrieval import RetrievedDocument
-from app.schemas import (
+from app.knowledge.retrieval import RetrievedDocument
+from app.ai.schemas import (
     DraftProviderResult,
     DraftRequest,
     TriageRequest,
     TriageResponse,
 )
-from app.workflow import AIWorkflow
+from app.ai.workflow import AIWorkflow
 import pytest
 
 class FakeRetriever:

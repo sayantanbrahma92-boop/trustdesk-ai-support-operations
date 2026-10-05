@@ -45,6 +45,26 @@ For triage, Spring loads the ticket context and sends it to Python. For a draft,
 
 The Python service may recommend or generate content, but it does not authorize or execute sensitive business actions. Spring creates a pending refund-review request and requires a human decision. Only approval causes Spring to persist the refund-review record and mark the action as executed. This demo records a refund review; it does not issue a payment refund or move money.
 
+## Repository layout
+
+```text
+trustdesk/
+├── src/                  # Spring Boot backend and Java tests
+├── ai-service/
+│   ├── app/
+│   │   ├── ai/
+│   │   ├── api/
+│   │   ├── evaluation/
+│   │   ├── knowledge/
+│   │   └── safety/
+│   ├── tests/
+│   └── reports/
+├── frontend/             # React support-agent interface
+├── docs/                 # API, architecture, and evaluation docs
+├── gradle/               # Gradle Wrapper configuration
+└── README.md
+```
+
 ## Tools and technologies
 
 | Area | Technology |
@@ -138,7 +158,7 @@ Start the service:
 ```powershell
 cd C:\Project\trustdesk\ai-service
 $env:TRUSTDESK_CHROMA_PATH = "C:\Project\trustdesk\ai-service\data\chroma-ui-test"
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8001
+.\.venv\Scripts\python.exe -m uvicorn app.api.main:app --host 127.0.0.1 --port 8001
 ```
 
 ### 2. Spring Boot backend
@@ -238,7 +258,7 @@ Run it from the AI service directory:
 
 ```powershell
 cd C:\Project\trustdesk\ai-service
-.\.venv\Scripts\python.exe -m app.evaluation
+.\.venv\Scripts\python.exe -m app.evaluation.evaluation
 ```
 
 The evaluator makes live AI-provider calls and overwrites the report by default. The Spring endpoint and React quality panel display the latest saved report; loading the panel does not start an evaluation.

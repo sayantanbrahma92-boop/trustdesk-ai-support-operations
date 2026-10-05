@@ -5,9 +5,9 @@ from unittest.mock import Mock
 import pytest
 from pydantic import ValidationError
 
-from app.openrouter_provider import OpenRouterAIProvider
-from app.retrieval import RetrievedDocument
-from app.schemas import DraftRequest, TriageRequest
+from app.ai.openrouter_provider import OpenRouterAIProvider
+from app.knowledge.retrieval import RetrievedDocument
+from app.ai.schemas import DraftRequest, TriageRequest
 
 
 def make_client(content: str):
